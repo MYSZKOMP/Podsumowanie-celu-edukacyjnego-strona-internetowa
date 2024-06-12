@@ -1,0 +1,94 @@
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Stacja paliw</title>
+<link rel="stylesheet" href="styl2.css">
+
+</head>
+<body>
+<div class="header">
+<h1>Całodobowa stacja paliw</h1>
+</div>
+
+<div class="menu">
+<a href="Stacja.html"><img src="home.png"></a>
+<a href="obliczenia.html"><img src="znak.png"></a>
+
+
+</div>
+
+<div class="lewy">
+<h2>Orientacyjny koszt paliwa</h2>
+<form>
+Rodzaj paliwa (1-benzyna, 2-olej napędowy):<br>
+<input type="number" id="rodzaj"><br>
+Liczba litrow:<br>
+<input type="number" id="ile"><br>
+<input type="button" value="oblicz" onclick="obliczKoszt()">
+</form>
+<p id="wynik"></p>
+<div id="currentTime">
+    <?php
+$servername = "localhost";
+$username = "root"; 
+$password = ""; 
+$dbase = "stacja_benzynowa";
+
+// Tworzenie połączenia
+$conn = new mysqli($servername, $username, $password, $dbase);
+
+// Sprawdzanie połączenia
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+echo "Connection successful";
+?>
+</div>
+</div>
+
+<div class="prawy">
+<center><img src="zdjecie.jpg" width="150px" height="150px" alt="samochod"/></center> 
+</div>
+
+<div class="stopka">
+<p> Stronę opracował: Piotr Sosnówka </p>
+</div>
+
+<script>
+function obliczKoszt(){
+ var rodzaj = document.getElementById('rodzaj').value;
+ var ile = document.getElementById('ile').value;
+ if (rodzaj == 1) {
+ koszt = 4 * ile;
+ }
+ else if (rodzaj == 2) {
+ koszt = 3.5 * ile;
+ }
+ else{
+ koszt = 0;
+ }
+ document.getElementById('wynik').innerText ='koszt paliwa: ' + koszt +  "zł";
+} 
+
+function updateTime() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, '0'); // Miesiące są liczone od 0
+    var day = String(now.getDate()).padStart(2, '0');
+    var hours = String(now.getHours()).padStart(2, '0');
+    var minutes = String(now.getMinutes()).padStart(2, '0');
+    var seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    var currentTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    document.getElementById('currentTime').innerHTML = currentTime;
+}
+
+// Aktualizuj czas co sekundę
+setInterval(updateTime, 1000);
+</script>
+</body>
+
+
+
+
+</html>
